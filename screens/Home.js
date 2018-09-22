@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import axios from 'axios'
 import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Fab, View } from 'native-base'
+import axios from 'axios'
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
@@ -43,7 +43,7 @@ export default class HomeScreen extends Component {
             success
             block
             style={{ marginBottom: 15 }}
-            onPress={() => this.props.navigation.push('ItemSearch')}
+            onPress={() => this.props.navigation.push('FindItem')}
           >
             <Icon name='add' />
             <Text>New Request</Text>

@@ -4,7 +4,8 @@ import { createStackNavigator } from 'react-navigation'
 
 import LoginScreen from './screens/Login'
 import HomeScreen from './screens/Home'
-import ItemSearchScreen from './screens/ItemSearch'
+import FindItemScreen from './screens/FindItem'
+import RequestScreen from './screens/Request'
 
 const RootStack = createStackNavigator(
   {
@@ -14,8 +15,11 @@ const RootStack = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
-    ItemSearch: {
-      screen: ItemSearchScreen
+    FindItem: {
+      screen: FindItemScreen
+    },
+    Request: {
+      screen: RequestScreen
     }
   },
   {
@@ -29,21 +33,4 @@ export default class App extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-})
+const styles = StyleSheet.create({})

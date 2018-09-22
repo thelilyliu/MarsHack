@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, Fab } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab } from 'native-base'
 
-export default class ItemSearchScreen extends Component {
+export default class FindItemScreen extends Component {
   static navigationOptions = {
+    title: 'Find Item',
     header: null
   }
 
@@ -16,9 +17,18 @@ export default class ItemSearchScreen extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ paddingTop : 35}}>
-          <Text>Add Item</Text>
+        <Header>
+          <Left>
+            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Text style={{ fontSize: 20 }}>Find Item</Text>
+          </Body>
+          <Right />
         </Header>
+
         <Content style={{ padding: 15 }}>
           <Form>
             <Item inlineLabel style={{ marginLeft: 10, marginRight: 10 }}>
@@ -36,7 +46,7 @@ export default class ItemSearchScreen extends Component {
             <Text>Search</Text>
           </Button>
 
-          <Card style={{ marginLeft: 10, marginRight: 10 }}>
+          <Card>
             <CardItem>
               <Left>
                 <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
@@ -56,6 +66,15 @@ export default class ItemSearchScreen extends Component {
             <CardItem>
               <Body style={{ padding: 5 }}>
                 <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+                <Button
+                  iconLeft
+                  bordered
+                  style={{ marginTop: 15, marginBottom: 5 }}
+                  onPress={() => this.props.navigation.push('Request')}
+                >
+                  <Icon name='basket' />
+                  <Text>Select Item</Text>
+                </Button>
               </Body>
             </CardItem>
           </Card>
