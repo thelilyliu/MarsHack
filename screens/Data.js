@@ -38,6 +38,29 @@ class Data {
   setSelectedProduct(item) {
     this.selectedProduct = item
   }
+
+  async createOrder(orderObj) {
+    const url = 'http://mars-hack.herokuapp.com/api/create_order'
+
+    let data = orderObj
+
+    let config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    let res
+    try {
+      res = await axios.post(url, data, config)
+    } catch (error) {
+      console.error(error)
+    }
+
+    console.log(res.data)
+
+    return res.data
+  }
 }
 
 const data = new Data()
