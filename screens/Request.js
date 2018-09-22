@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, StatusBar, Alert } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, DatePicker } from 'native-base'
+import { StyleSheet, View } from 'react-native'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, Left, Right, Switch, Thumbnail, DatePicker } from 'native-base'
+import Modal from 'react-native-modal'
 import data from './Data'
 
 export default class RequestScreen extends Component {
@@ -13,7 +14,9 @@ export default class RequestScreen extends Component {
       share: 0,
       canDeliver: false,
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
+      orderObj: {},
+      showModal: false
     }
 
     this.setShare = this.setShare.bind(this)
@@ -41,36 +44,22 @@ export default class RequestScreen extends Component {
   }
 
   confirmOrder() {
-    let orderObj = {
-      "product_id": data.selectedProduct.pk,
-      "user_id": '5bba4139-1ee7-4ac2-8e77-72ed3f6b5a18_66293222-e8a4-478f-b69d-fc5598c67e7e',
-      "start_date": this.dateToString(this.state.startDate),
-      "end_date": this.dateToString(this.state.endDate),
-      "percentage": this.state.share,
-      "can_deliver": this.state.canDeliver
-    }
-
-    let confirmationDetails = `
-Price: $${data.selectedProduct.fields.price}
-Product: ${data.selectedProduct.fields.name}
-Store: ${data.selectedProduct.fields.store}
-Share: ${orderObj.percentage}%
-Volunteer as a Deliverer: ${ orderObj.can_deliver ? 'Yes' : 'No' }
-From Date: ${orderObj.start_date}
-To Date: ${orderObj.end_date}`
-
-    Alert.alert(
-      'Please Confirm Your Order',
-      confirmationDetails,
-      [
-        { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-        { text: 'OK', onPress: () => this.placeOrder(orderObj) },
-      ]
-    )
+    this.setState({
+      orderObj: {
+        "product_id": data.selectedProduct.pk,
+        "user_id": '5bba4139-1ee7-4ac2-8e77-72ed3f6b5a18_66293222-e8a4-478f-b69d-fc5598c67e7e',
+        "start_date": this.dateToString(this.state.startDate),
+        "end_date": this.dateToString(this.state.endDate),
+        "percentage": this.state.share,
+        "can_deliver": this.state.canDeliver
+      },
+      showModal: true
+    })
   }
 
-  placeOrder(orderObj) {
-    data.createOrder(orderObj)
+  placeOrder() {
+    data.createOrder(this.state.orderObj)
+    this.toggleModal()
     this.props.navigation.push('Home')
   }
 
@@ -86,12 +75,23 @@ To Date: ${orderObj.end_date}`
     return year + '-' + month + '-' + day
   }
 
+  toggleModal() {
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal }
+    })
+  }
+
   render() {
     return (
       <Container>
         <Header>
           <Left>
-            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+            <Button
+              iconLeft
+              transparent
+              style={{ marginLeft: 5 }}
+              onPress={() => this.props.navigation.goBack()}
+            >
               <Icon name='arrow-back' />
             </Button>
           </Left>
@@ -220,6 +220,53 @@ To Date: ${orderObj.end_date}`
             <Text>Confirm Order</Text>
           </Button>
         </Content>
+      
+        <Modal isVisible={this.state.showModal}>
+          <View style={{ backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+            <Text style={{ fontSize: 20, marginBottom: 20 }}>Confirm Your Order Details</Text>
+            
+            <Text style={{ marginBottom: 5 }}>Product:
+              <Text style={{ color: '#0d47a1' }}> {data.selectedProduct.fields.name}</Text>
+            </Text>
+            <Text style={{ marginBottom: 5 }}>Store:
+              <Text style={{ color: '#0d47a1' }}> {data.selectedProduct.fields.store}</Text>
+            </Text>
+            <Text style={{ marginBottom: 5 }}>Share:
+              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.percentage}%</Text>
+            </Text>
+            <Text style={{ marginBottom: 5 }}>Volunteer as a Deliverer:
+              <Text style={{ color: '#0d47a1' }}> { this.state.orderObj.can_deliver ? 'Yes' : 'No' }</Text>
+            </Text>
+            <Text style={{ marginBottom: 5 }}>From Date:
+              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.start_date}</Text>
+            </Text>
+            <Text style={{ marginBottom: 5 }}>To Date:
+              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.end_date}</Text>
+            </Text>
+            <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Your Estimated Price:
+              <Text style={{ color: '#0d47a1' }}> ${ (data.selectedProduct.fields.price * this.state.orderObj.percentage * 0.01).toFixed(2) }</Text>
+            </Text>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+              <Button
+                iconLeft
+                light
+                onPress={() => this.toggleModal()}
+              >
+                <Icon name='close' />
+                <Text>Cancel</Text>
+              </Button>
+              <Button
+                iconLeft
+                success
+                onPress={() => this.placeOrder()}
+              >
+                <Icon name='done-all' />
+                <Text>Confirm</Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
       </Container>
     )
   }

@@ -40,10 +40,8 @@ class Data {
   }
 
   async createOrder(orderObj) {
-    const url = 'http://mars-hack.herokuapp.com/api/create_order'
-
+    const url = 'http://mars-hack.herokuapp.com/api/create_order/'
     let data = orderObj
-
     let config = {
       headers: {
         'Content-Type': 'application/json'

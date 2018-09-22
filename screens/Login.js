@@ -16,7 +16,11 @@ export default class LoginScreen extends Component {
       <Container>
         <Header>
           <Left>
-            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+            <Button
+              iconLeft
+              transparent
+              style={{ marginLeft: 5 }}
+            >
               <Icon name='menu' />
             </Button>
           </Left>

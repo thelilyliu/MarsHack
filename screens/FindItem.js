@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab, Picker } from 'native-base'
+import { StyleSheet, View, Image } from 'react-native'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, Left, Right, Form, Item, Label, Input, Thumbnail, Fab, Picker } from 'native-base'
 import data from './Data'
 
 export default class FindItemScreen extends Component {
@@ -47,7 +47,12 @@ export default class FindItemScreen extends Component {
       <Container>
         <Header>
           <Left>
-            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+            <Button
+              iconLeft
+              transparent
+              style={{ marginLeft: 5 }}
+              onPress={() => this.props.navigation.goBack()}
+            >
               <Icon name='arrow-back' />
             </Button>
           </Left>
