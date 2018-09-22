@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-// import { Container, Header, Content, Button, Text } from 'native-base'
+import { StyleSheet } from 'react-native'
+import { Container, Header, Content, Button, Text } from 'native-base'
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -11,24 +11,22 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
-      // <Container>
-      //   <Header />
-      //   <Content>
-      //     <Button>
-      //       <Text>User #1</Text>
-      //     </Button>
-      //     <Button>
-      //       <Text>User #2</Text>
-      //     </Button>
-      //     <Button>
-      //       <Text>User #3</Text>
-      //     </Button>
-      //     <Button>
-      //       <Text>User #4</Text>
-      //     </Button>
-      //   </Content>
-      // </Container>
-      <Text>Login</Text>
+      <Container>
+        <Content style={{ padding: 15 }}>
+          <Button block style={{ marginBottom: 15 }}>
+            <Text>Lily Liu</Text>
+          </Button>
+          <Button block style={{ marginBottom: 15 }}>
+            <Text>Ben Xiao</Text>
+          </Button>
+          <Button block style={{ marginBottom: 15 }}>
+            <Text>Kevin Trieu</Text>
+          </Button>
+          <Button block style={{ marginBottom: 15 }}>
+            <Text>Haibo Wang</Text>
+          </Button>
+        </Content>
+      </Container>
     )
   }
 }
