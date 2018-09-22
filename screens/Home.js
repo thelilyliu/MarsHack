@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Fab, View } from 'native-base'
-import axios from 'axios'
+import data from './Data'
 
 export default class HomeScreen extends Component {
   static navigationOptions = { header: null }
@@ -13,20 +13,7 @@ export default class HomeScreen extends Component {
       active : false
     }
 
-    this.getProducts()
-  }
-
-  async getProducts() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_products'
-
-    let res
-    try {
-      res = await axios.get(url)
-    } catch (error) {
-      console.error(error)
-    }
-
-    console.log(res.data)
+    data.getAllProducts()
   }
 
   render() {

@@ -7,6 +7,8 @@ import HomeScreen from './screens/Home'
 import FindItemScreen from './screens/FindItem'
 import RequestScreen from './screens/Request'
 
+console.disableYellowBox = true
+
 const RootStack = createStackNavigator(
   {
     Login: {
@@ -23,7 +25,7 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Home',
   }
 )
 

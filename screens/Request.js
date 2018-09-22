@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
 import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, DatePicker } from 'native-base'
+import data from './Data'
 
 export default class RequestScreen extends Component {
   static navigationOptions = { header: null }
@@ -46,15 +47,15 @@ export default class RequestScreen extends Component {
               <Left>
                 <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
                 <Body style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 18, marginBottom: 3 }}>Eggs</Text>
-                  <Text note style={{ fontSize: 15 }}>Costco Wholesale</Text>
+                  <Text style={{ fontSize: 18, marginBottom: 3 }}>{data.selectedProduct.fields.name}</Text>
+                  <Text note style={{ fontSize: 15 }}>{data.selectedProduct.fields.store}</Text>
                 </Body>
               </Left>
-              <Text style={{ fontSize: 18 }}>$16.80</Text>
+              <Text style={{ fontSize: 18 }}>${data.selectedProduct.fields.price}</Text>
             </CardItem>
             <CardItem bordered>
               <Body style={{ padding: 5 }}>
-                <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+                <Text>{data.selectedProduct.fields.description}</Text>
               </Body>
             </CardItem>
           </Card>

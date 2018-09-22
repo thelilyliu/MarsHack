@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab, Picker } from 'native-base'
+import data from './Data'
 
 export default class FindItemScreen extends Component {
   static navigationOptions = { header: null }
@@ -8,7 +9,37 @@ export default class FindItemScreen extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      searched: false,
+      item: '',
+      store: 'Costco Wholesale',
+      filteredProducts: []
+    }
+
+    this.setItem = this.setItem.bind(this)
+    this.setStore = this.setStore.bind(this)
+    this.filterProducts = this.filterProducts.bind(this)
+    this.selectProduct = this.selectProduct.bind(this)
+  }
+
+  setItem(newItem) {
+    this.setState({ item: newItem })
+  }
+
+  setStore(newStore) {
+    this.setState({ store: newStore })
+  }
+
+  filterProducts() {
+    this.setState({
+      searched: true,
+      filteredProducts: data.getFilteredProducts(this.state.item, this.state.store)
+    })
+  }
+
+  selectProduct(product) {
+    data.setSelectedProduct(product)
+    this.props.navigation.push('Request')
   }
 
   render() {
@@ -30,54 +61,76 @@ export default class FindItemScreen extends Component {
           <Form>
             <Item inlineLabel style={{ marginLeft: 10, marginRight: 10 }}>
               <Label>Item</Label>
-              <Input />
+              <Input onChangeText={this.setItem} style={{ paddingLeft: 22 }} />
             </Item>
             <Item inlineLabel style={{ marginLeft: 10, marginRight: 10 }}>
               <Label>Store</Label>
-              <Input />
+              <Picker
+                note
+                mode='dropdown'
+                style={{ width: 300 }}
+                selectedValue={this.state.store}
+                onValueChange={this.setStore}
+              >
+                <Picker.Item label='Costco Wholesale' value='Costco Wholesale' />
+                <Picker.Item label='Walmart' value='Walmart' />
+                <Picker.Item label='Loblaws' value='Loblaws' />
+                <Picker.Item label='Fortinos' value='Fortinos' />
+                <Picker.Item label='Sobeys' value='Sobeys' />
+              </Picker>
             </Item>
           </Form>
 
-          <Button iconLeft block info style={{ marginLeft: 10, marginRight: 10, marginTop: 20, marginBottom: 20 }}>
+          <Button
+            iconLeft
+            block
+            info
+            style={{ marginLeft: 10, marginRight: 10, marginTop: 20, marginBottom: 20 }}
+            onPress={this.filterProducts}
+          >
             <Icon name='search' />
             <Text>Search</Text>
           </Button>
 
-          <Card>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
-                <Body style={{ flex: 1 }}>
-                  <Text style={{ fontSize: 18, marginBottom: 3 }}>Eggs</Text>
-                  <Text note style={{ fontSize: 15 }}>Costco Wholesale</Text>
-                </Body>
-              </Left>
-              <Text style={{ fontSize: 18 }}>$16.80</Text>
-            </CardItem>
-            <CardItem cardBody>
-              <Image
-                source={{ uri: 'https://cdn.modernfarmer.com/wp-content/uploads/2018/04/eggcarton.jpg' }}
-                style={{ height: 200, width: null, flex: 1 }}
-              />
-            </CardItem>
-            <CardItem>
-              <Body style={{ padding: 5 }}>
-                <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
-                <Button
-                  iconLeft
-                  bordered
-                  style={{ marginTop: 15, marginBottom: 5 }}
-                  onPress={() => this.props.navigation.push('Request')}
-                >
-                  <Icon name='basket' />
-                  <Text>Select Item</Text>
-                </Button>
-              </Body>
-            </CardItem>
-          </Card>
+          {this.state.searched && this.state.filteredProducts.map(product => {
+            return (
+              <Card key={product.pk} style={{ marginBottom: 15 }}>
+                <CardItem>
+                  <Left>
+                    <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
+                    <Body style={{ flex: 1 }}>
+                      <Text style={{ fontSize: 18, marginBottom: 3 }}>{product.fields.name}</Text>
+                      <Text note style={{ fontSize: 15 }}>{product.fields.store}</Text>
+                    </Body>
+                  </Left>
+                  <Text style={{ fontSize: 18 }}>${product.fields.price}</Text>
+                </CardItem>
+                <CardItem cardBody>
+                  <Image
+                    source={{ uri: product.fields.image_url }}
+                    style={{ height: 200, width: null, flex: 1 }}
+                  />
+                </CardItem>
+                <CardItem>
+                  <Body style={{ padding: 5 }}>
+                    <Text>{product.fields.description}</Text>
+                    <Button
+                      iconLeft
+                      bordered
+                      style={{ marginTop: 15, marginBottom: 5 }}
+                      onPress={() => this.selectProduct(product)}
+                    >
+                      <Icon name='basket' />
+                      <Text>Select Item</Text>
+                    </Button>
+                  </Body>
+                </CardItem>
+              </Card>
+            )
+          })}
         </Content>
 
-         <View>
+        <View>
           <Fab
             active={this.state.active}
             direction="up"
