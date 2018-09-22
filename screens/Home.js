@@ -1,22 +1,19 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet } from 'react-native'
-import { createStackNavigator } from 'react-navigation'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 
-import LoginScreen from './screens/Login'
-import HomeScreen from './screens/Home'
+export default class HomeScreen extends Component {
+  constructor(props) {
+    super(props)
 
-const RootStack = createStackNavigator({
-  Login: {
-    screen: LoginScreen
-  },
-  Home: {
-    screen: HomeScreen
-  },
-})
+    this.state = {}
+  }
 
-export default class App extends Component {
   render() {
-    return <RootStack />
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Home</Text>
+      </View>
+    )
   }
 }
 
