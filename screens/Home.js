@@ -33,22 +33,24 @@ export default class HomeScreen extends Component {
     return (
       <Container>
         <Header>
-          <Left></Left>
-          <Body>
-            <Text>Home</Text>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="menu"></Icon>
+          <Left>
+            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+              <Icon name='menu' />
             </Button>
-          </Right>
+          </Left>
+          <Body>
+            <Text style={{ fontSize: 20 }}>Home</Text>
+          </Body>
+          <Right />
         </Header>
-        <Content style={{ padding: 15 }}>
-          
+
+        <Content style={{ padding: 15 }}>  
           <Button
             iconLeft
             success
+            block
             style={{ marginBottom: 15 }}
+            onPress={() => this.props.navigation.push('ItemSearch')}
           >
             <Icon name='add' />
             <Text>New Request</Text>
@@ -106,30 +108,36 @@ export default class HomeScreen extends Component {
               </Right>
             </ListItem>
 
-            <ListItem icon style={{ marginBottom: 5 }}>
+            <ListItem icon>
               <Left>
                 <Button style={{ backgroundColor: '#00bcd4' }}>
                   <Icon active name='calendar' />
                 </Button>
               </Left>
-              <Body style={{ borderColor: 'transparent' }}>
+              <Body>
                 <Text>Delivery Date</Text>
               </Body>
-              <Right style={{ borderColor: 'transparent' }}>
+              <Right>
                 <Text style={{ color: 'black' }}>Fri. Sep. 21</Text>
               </Right>
             </ListItem>
 
-            <CardItem footer bordered>
+            <ListItem icon style={{ marginBottom: 5 }}>
               <Left>
-                <Text>Edit</Text>
+                <Button style={{ backgroundColor: '#009688' }}>
+                  <Icon active name='construct' />
+                </Button>
               </Left>
-              <Right>
-                <Text>Cancel</Text>
+              <Body style={{ borderColor: 'transparent' }}>
+                <Text>More Actions</Text>
+              </Body>
+              <Right style={{ borderColor: 'transparent' }}>
+                <Button iconLeft transparent>
+                  <Icon name='arrow-forward' style={{ fontSize: 30 }} />
+                </Button>
               </Right>
-            </CardItem>
+            </ListItem>
           </Card>
-
         </Content>
       </Container>
     )

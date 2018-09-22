@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation'
 
 import LoginScreen from './screens/Login'
 import HomeScreen from './screens/Home'
+import ItemSearchScreen from './screens/ItemSearch'
 
 const RootStack = createStackNavigator(
   {
@@ -13,9 +14,12 @@ const RootStack = createStackNavigator(
     Home: {
       screen: HomeScreen
     },
+    ItemSearch: {
+      screen: ItemSearchScreen
+    }
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'ItemSearch',
   }
 )
 
