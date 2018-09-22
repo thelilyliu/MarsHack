@@ -133,7 +133,7 @@ export default class HomeScreen extends Component {
           </Card>
         </Content>
 
-        <View style={{ flex: 1 }}>
+        <View>
           <Fab
             active={this.state.active}
             direction="up"
