@@ -1,18 +1,23 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { createStackNavigator } from 'react-navigation'
 
 import LoginScreen from './screens/Login'
 import HomeScreen from './screens/Home'
 
-const RootStack = createStackNavigator({
-  Login: {
-    screen: LoginScreen
+const RootStack = createStackNavigator(
+  {
+    Login: {
+      screen: LoginScreen
+    },
+    Home: {
+      screen: HomeScreen
+    },
   },
-  Home: {
-    screen: HomeScreen
-  },
-})
+  {
+    initialRouteName: 'Home',
+  }
+)
 
 export default class App extends Component {
   render() {

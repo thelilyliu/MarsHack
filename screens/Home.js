@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Container, Header, Content, Button, Text } from 'native-base'
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -10,9 +11,11 @@ export default class HomeScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Home</Text>
-      </View>
+      <Container>
+        <Content style={{ padding: 15 }}>
+          <Text>Home</Text>
+        </Content>
+      </Container>
     )
   }
 }
