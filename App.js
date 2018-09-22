@@ -19,7 +19,7 @@ const RootStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: 'ItemSearch',
+    initialRouteName: 'Login',
   }
 )
 

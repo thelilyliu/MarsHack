@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, Fab } from 'native-base'
 
 export default class ItemSearchScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
   constructor(props) {
     super(props)
 
@@ -12,6 +16,9 @@ export default class ItemSearchScreen extends Component {
   render() {
     return (
       <Container>
+        <Header style={{ paddingTop : 35}}>
+          <Text>Add Item</Text>
+        </Header>
         <Content style={{ padding: 15 }}>
           <Form>
             <Item inlineLabel style={{ marginLeft: 10, marginRight: 10 }}>
@@ -53,6 +60,27 @@ export default class ItemSearchScreen extends Component {
             </CardItem>
           </Card>
         </Content>
+
+         <View style={{ flex: 1 }}>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => this.setState({ active: !this.state.active })}>
+            <Icon name="menu" />
+            <Button style={{ backgroundColor: '#34A34F' }}>
+              <Icon name="home" onPress={() => this.props.navigation.push('Home')}/>
+            </Button>
+            <Button style={{ backgroundColor: '#3B5998' }}>
+              <Icon name="pulse" />
+            </Button>
+            <Button disabled style={{ backgroundColor: '#DD5144' }}>
+              <Icon name="add" />
+            </Button>
+          </Fab>
+        </View>
       </Container>
     )
   }
