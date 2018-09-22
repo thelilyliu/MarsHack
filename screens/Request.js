@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, DatePicker } from 'native-base'
 
 export default class RequestScreen extends Component {
   static navigationOptions = {
@@ -11,7 +11,15 @@ export default class RequestScreen extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      chosenDate: new Date()
+    }
+
+    this.setDate = this.setDate.bind(this)
+  }
+
+  setDate(newDate) {
+    this.setState({ chosenDate: newDate })
   }
 
   render() {
@@ -49,7 +57,6 @@ export default class RequestScreen extends Component {
           </Card>
 
           <Text style={{ fontSize: 18, marginTop: 15, marginBottom: 15 }}>Choose Your Share: 30%</Text>
-
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
             <Button bordered>
               <Text style={{ paddingLeft: 10, paddingRight: 10 }}>10%</Text>
@@ -70,8 +77,54 @@ export default class RequestScreen extends Component {
 
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 25, marginBottom: 15 }}>
             <Text style={{ fontSize: 18 }}>Volunteer as a Deliverer: Yes</Text>
-            <Switch value={true} />
+            <Switch style={{ marginRight: 10 }} value={true} />
           </View>
+
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 18, marginTop: 10 }}>From Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
+            <DatePicker
+              defaultDate={new Date(2018, 4, 4)}
+              minimumDate={new Date(2018, 1, 1)}
+              maximumDate={new Date(2018, 12, 31)}
+              locale={"en"}
+              timeZoneOffsetInMinutes={undefined}
+              modalTransparent={false}
+              animationType={"fade"}
+              androidMode={"default"}
+              placeHolderText="Select date"
+              textStyle={{ color: "green" }}
+              placeHolderTextStyle={{ color: "#d3d3d3" }}
+              onDateChange={this.setDate}
+            />
+          </View>
+
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 18, marginTop: 10 }}>To Date: {this.state.chosenDate.toString().substr(4, 12)}</Text>
+            <DatePicker
+              defaultDate={new Date(2018, 4, 4)}
+              minimumDate={new Date(2018, 1, 1)}
+              maximumDate={new Date(2018, 12, 31)}
+              locale={"en"}
+              timeZoneOffsetInMinutes={undefined}
+              modalTransparent={false}
+              animationType={"fade"}
+              androidMode={"default"}
+              placeHolderText="Select date"
+              textStyle={{ color: "green" }}
+              placeHolderTextStyle={{ color: "#d3d3d3" }}
+              onDateChange={this.setDate}
+            />
+          </View>
+
+          <Button
+            iconLeft
+            block
+            style={{ marginTop: 15 }}
+            onPress={() => this.props.navigation.push('Home')}
+          >
+            <Icon name='paper-plane' />
+            <Text>Submit Request</Text>
+          </Button>
         </Content>
       </Container>
     )
