@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
+import axios from 'axios'
 import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch } from 'native-base'
 
 export default class HomeScreen extends Component {
+  static navigationOptions = {
+    title: 'Home',
+    header: null
+  }
   constructor(props) {
     super(props)
 
@@ -11,13 +16,33 @@ export default class HomeScreen extends Component {
     this.getProducts()
   }
 
-  getProducts() {
-    console.log()
+  async getProducts() {
+    const url = 'http://mars-hack.herokuapp.com/api/get_products'
+
+    let res
+    try {
+      res = await axios.get(url)
+    } catch (error) {
+      console.error(error)
+    }
+
+    console.log(res.data)
   }
 
   render() {
     return (
       <Container>
+        <Header>
+          <Left></Left>
+          <Body>
+            <Text>Home</Text>
+          </Body>
+          <Right>
+            <Button transparent>
+              <Icon name="menu"></Icon>
+            </Button>
+          </Right>
+        </Header>
         <Content style={{ padding: 15 }}>
           
           <Button
