@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Image, StatusBar } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab } from 'native-base'
 
 export default class FindItemScreen extends Component {
   static navigationOptions = {
@@ -79,6 +79,27 @@ export default class FindItemScreen extends Component {
             </CardItem>
           </Card>
         </Content>
+
+         <View style={{ flex: 1 }}>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => this.setState({ active: !this.state.active })}>
+            <Icon name="menu" />
+            <Button style={{ backgroundColor: '#34A34F' }}>
+              <Icon name="home" onPress={() => this.props.navigation.push('Home')}/>
+            </Button>
+            <Button style={{ backgroundColor: '#3B5998' }}>
+              <Icon name="pulse" />
+            </Button>
+            <Button disabled style={{ backgroundColor: '#DD5144' }}>
+              <Icon name="add" />
+            </Button>
+          </Fab>
+        </View>
       </Container>
     )
   }

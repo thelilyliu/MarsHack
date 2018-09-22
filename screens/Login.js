@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native'
 import { Container, Header, Content, Button, Text } from 'native-base'
 
 export default class LoginScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
   constructor(props) {
     super(props)
 
@@ -12,6 +16,9 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <Container>
+        <Header style={{ paddingTop : 35}}>
+          <Text>Login</Text>
+        </Header>
         <Content style={{ padding: 15 }}>
           <Button
             block

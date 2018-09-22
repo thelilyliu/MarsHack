@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Fab, View } from 'native-base'
 import axios from 'axios'
 
 export default class HomeScreen extends Component {
   static navigationOptions = {
-    title: 'Home',
     header: null
   }
 
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      active : false
+    }
 
     this.getProducts()
   }
@@ -33,18 +34,9 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Left>
-            <Button iconLeft transparent style={{ marginLeft: 5 }}>
-              <Icon name='menu' />
-            </Button>
-          </Left>
-          <Body>
-            <Text style={{ fontSize: 20 }}>Home</Text>
-          </Body>
-          <Right />
+        <Header style={{ paddingTop : 35}}>
+          <Text>Home</Text>
         </Header>
-
         <Content style={{ padding: 15 }}>  
           <Button
             iconLeft
@@ -140,6 +132,28 @@ export default class HomeScreen extends Component {
             </ListItem>
           </Card>
         </Content>
+
+        <View style={{ flex: 1 }}>
+          <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={{ }}
+            style={{ backgroundColor: '#5067FF' }}
+            position="bottomRight"
+            onPress={() => this.setState({ active: !this.state.active })}>
+            <Icon name="menu" />
+            <Button style={{ backgroundColor: '#34A34F' }} >
+              <Icon name="home"/>
+            </Button>
+            <Button style={{ backgroundColor: '#3B5998' }}>
+              <Icon name="pulse"/>
+            </Button>
+            <Button style={{ backgroundColor: '#DD5144' }} 
+                    onPress={() => this.props.navigation.push('ItemSearch')}>
+              <Icon name="add"/>
+            </Button>
+          </Fab>
+        </View>
       </Container>
     )
   }
