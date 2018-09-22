@@ -4,9 +4,7 @@ import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, L
 import axios from 'axios'
 
 export default class HomeScreen extends Component {
-  static navigationOptions = {
-    header: null
-  }
+  static navigationOptions = { header: null }
 
   constructor(props) {
     super(props)
@@ -34,9 +32,18 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ paddingTop : 35}}>
-          <Text>Home</Text>
+        <Header>
+          <Left>
+            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+            <Text style={{ fontSize: 18 }}>Home</Text>
+          </Body>
+          <Right />
         </Header>
+
         <Content style={{ padding: 15 }}>  
           <Button
             iconLeft
@@ -45,8 +52,8 @@ export default class HomeScreen extends Component {
             style={{ marginBottom: 15 }}
             onPress={() => this.props.navigation.push('FindItem')}
           >
-            <Icon name='add' />
-            <Text>New Request</Text>
+            <Icon name='add' style={{ fontSize: 32, marginTop: -1 }} />
+            <Text style={{ fontSize: 18 }}>New Request</Text>
           </Button>
 
           <Card>
@@ -97,7 +104,7 @@ export default class HomeScreen extends Component {
                 <Text>Delivery Volunteer</Text>
               </Body>
               <Right>
-                <Switch value={true} />
+                <Switch value={true} disabled />
               </Right>
             </ListItem>
 

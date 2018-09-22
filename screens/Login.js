@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Header, Content, Button, Text } from 'native-base'
+import { Container, Header, Content, Button, Text, Left, Icon, Right, Body } from 'native-base'
 
 export default class LoginScreen extends Component {
-  static navigationOptions = {
-    header: null
-  }
+  static navigationOptions = { header: null }
 
   constructor(props) {
     super(props)
@@ -16,9 +14,18 @@ export default class LoginScreen extends Component {
   render() {
     return (
       <Container>
-        <Header style={{ paddingTop : 35}}>
-          <Text>Login</Text>
+        <Header>
+          <Left>
+            <Button iconLeft transparent style={{ marginLeft: 5 }}>
+              <Icon name='menu' />
+            </Button>
+          </Left>
+          <Body>
+            <Text style={{ fontSize: 18 }}>Login</Text>
+          </Body>
+          <Right />
         </Header>
+
         <Content style={{ padding: 15 }}>
           <Button
             block

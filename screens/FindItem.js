@@ -3,10 +3,7 @@ import { StyleSheet, View, Image, StatusBar } from 'react-native'
 import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Title, Form, Item, Label, Input, Thumbnail, CheckBox, Fab } from 'native-base'
 
 export default class FindItemScreen extends Component {
-  static navigationOptions = {
-    title: 'Find Item',
-    header: null
-  }
+  static navigationOptions = { header: null }
 
   constructor(props) {
     super(props)
@@ -24,7 +21,7 @@ export default class FindItemScreen extends Component {
             </Button>
           </Left>
           <Body>
-            <Text style={{ fontSize: 20 }}>Find Item</Text>
+            <Text style={{ fontSize: 18 }}>Find Item</Text>
           </Body>
           <Right />
         </Header>
@@ -51,7 +48,7 @@ export default class FindItemScreen extends Component {
               <Left>
                 <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
                 <Body style={{ flex: 1 }}>
-                  <Text style={{ marginBottom: 3 }}>Eggs</Text>
+                  <Text style={{ fontSize: 18, marginBottom: 3 }}>Eggs</Text>
                   <Text note style={{ fontSize: 15 }}>Costco Wholesale</Text>
                 </Body>
               </Left>
