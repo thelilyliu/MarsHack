@@ -7,6 +7,12 @@ export default class HomeScreen extends Component {
     super(props)
 
     this.state = {}
+
+    this.getProducts()
+  }
+
+  getProducts() {
+    console.log()
   }
 
   render() {
