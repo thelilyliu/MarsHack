@@ -59,7 +59,9 @@ export default class FindItemScreen extends Component {
           <Body>
             <Text style={{ fontSize: 18 }}>Find Item</Text>
           </Body>
-          <Right />
+          <Right>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomerFirstName}</Text>
+          </Right>
         </Header>
 
         <Content style={{ padding: 15 }}>

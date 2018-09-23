@@ -22,12 +22,20 @@ export default class LoginScreen extends Component {
   async setCustomer(num) {
     if (num === 0) {
       data.myCustomerID = CUSTOMER_ID0
+      data.myCustomerFirstName = 'Peregrine'
+      data.myCustomerAddress = '2132 Gerrard St E, Toronto'
     } else if (num === 1) {
       data.myCustomerID = CUSTOMER_ID1
+      data.myCustomerFirstName = 'Kaine'
+      data.myCustomerAddress = '2083 Gerrard St E, Toronto'
     } else if (num === 2) {
       data.myCustomerID = CUSTOMER_ID2
+      data.myCustomerFirstName = 'Noelle'
+      data.myCustomerAddress = '38 Kildonan Road, Toronto'
     } else if (num === 3) {
       data.myCustomerID = CUSTOMER_ID3
+      data.myCustomerFirstName = 'Lashanda'
+      data.myCustomerAddress = '2142 Gerrard St. E, Toronto'
     }
 
     await data.getAllProducts()

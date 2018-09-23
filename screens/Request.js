@@ -23,7 +23,7 @@ export default class RequestScreen extends Component {
     this.setCanDeliver = this.setCanDeliver.bind(this)
     this.setStartDate = this.setStartDate.bind(this)
     this.setEndDate = this.setEndDate.bind(this)
-    this.confirmOrder = this.confirmOrder.bind(this)
+    this.reviewOrder = this.reviewOrder.bind(this)
     this.dateToString = this.dateToString.bind(this)
   }
 
@@ -43,7 +43,7 @@ export default class RequestScreen extends Component {
     this.setState({ endDate: newDate })
   }
 
-  confirmOrder() {
+  reviewOrder() {
     this.setState({
       orderObj: {
         "product_id": data.selectedProduct.pk,
@@ -98,7 +98,9 @@ export default class RequestScreen extends Component {
           <Body>
             <Text style={{ fontSize: 18 }}>Request</Text>
           </Body>
-          <Right />
+          <Right>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomerFirstName}</Text>
+          </Right>
         </Header>
 
         <Content style={{ padding: 15 }}>
@@ -211,17 +213,17 @@ export default class RequestScreen extends Component {
           </View>
 
           <Text style={{ fontSize: 18, marginTop: 10 }}>Address:
-            <Text style={{ fontSize: 18, color: '#0d47a1' }}> 382 Yonge St, Toronto, ON M5B 1S8</Text>
+            <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.myCustomerAddress}</Text>
           </Text>
 
           <Button
             iconLeft
             block
-            style={{ marginTop: 15 }}
-            onPress={this.confirmOrder}
+            style={{ marginTop: 30 }}
+            onPress={this.reviewOrder}
           >
             <Icon name='paper-plane' />
-            <Text>Confirm Order</Text>
+            <Text>Review Order</Text>
           </Button>
 
           <View style={{ height: 20 }} />

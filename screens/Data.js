@@ -2,6 +2,8 @@ import axios from 'axios'
 
 class Data {
   myCustomerID = ''
+  myCustomerFirstName = ''
+  myCustomerAddress = ''
 
   allProducts = []
   allMatchedOrders = []

@@ -33,7 +33,18 @@ export default class HomeScreen extends Component {
   }
 
   completeOrder() {
-    this.toggleModal()
+    let counter = 0
+    let total = this.state.selectedOrder.users.length - 1
+
+    this.state.selectedOrder.users.forEach(user => {
+      if (user.is_complete) {
+        counter++
+      }
+    })
+
+    if (counter === total) {
+      this.toggleModal()
+    }
   }
 
   receiveOrder() {
@@ -87,10 +98,12 @@ export default class HomeScreen extends Component {
           <Body>
             <Text style={{ fontSize: 18 }}>Home</Text>
           </Body>
-          <Right />
+          <Right>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomerFirstName}</Text>
+          </Right>
         </Header>
 
-        <Content style={{ padding: 15 }}>  
+        <Content style={{ padding: 15 }}>
           <Button
             iconLeft
             success
@@ -198,8 +211,9 @@ export default class HomeScreen extends Component {
                       return (
                         <ListItem key={user.user.id}>
                           <CheckBox
-                            checked={user.is_complete}
+                            checked={user.is_complete || user.user.customer_id === data.myCustomerID}
                             onPress={() => this.toggleCheck(index)}
+                            color={user.user.customer_id === data.myCustomerID ? '#9e9e9e' : '' }
                           />
                           <Body style={{ marginLeft: 5 }}>
                             <Text style={{ fontSize: 18, marginBottom: 5 }}>
