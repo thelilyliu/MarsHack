@@ -14,13 +14,29 @@ export default class HomeScreen extends Component {
       clickedOrder: false,
       selectedOrder: {},
       selectedOrderMatched: false,
-      showModal: false
+      showModal: false,
+      myMatchedOrders: data.allMatchedOrders,
+      myUnmatchedOrders: data.allUnmatchedOrders
     }
 
     this.showOrderDetails = this.showOrderDetails.bind(this)
     this.completeOrder = this.completeOrder.bind(this)
     this.receiveOrder = this.receiveOrder.bind(this)
     this.cancelOrder = this.cancelOrder.bind(this)
+
+    setInterval(() => {
+      this.refreshOrders()
+    }, 1000)
+  }
+
+  async refreshOrders() {
+    await data.getMatchedOrders()
+    await data.getUnmatchedOrders()
+
+    this.setState({
+      myMatchedOrders: data.allMatchedOrders,
+      myUnmatchedOrders: data.allUnmatchedOrders
+    })
   }
 
   showOrderDetails(order, matched) {
@@ -96,8 +112,9 @@ export default class HomeScreen extends Component {
               iconLeft
               transparent
               style={{ marginLeft: 5 }}
+              onPress={() => this.props.navigation.goBack()}
             >
-              <Icon name='menu' />
+              <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
@@ -121,7 +138,7 @@ export default class HomeScreen extends Component {
           </Button>
 
           <List>
-            {data.allMatchedOrders.map(order => {
+            {this.state.myMatchedOrders.map(order => {
               return (
                 <ListItem
                   key={order.users[0].order}
@@ -153,7 +170,7 @@ export default class HomeScreen extends Component {
           </List>
 
           <List>
-            {data.allUnmatchedOrders.map(order => {
+            {this.state.myUnmatchedOrders.map(order => {
               let product = this.getProductByID(order.fields.product)
 
               return (
@@ -191,7 +208,7 @@ export default class HomeScreen extends Component {
             })}
           </List>
           
-          <View style={{ height: 20 }} />
+          <View style={{ height: 30 }} />
         </Content>
 
         {this.state.clickedOrder && 

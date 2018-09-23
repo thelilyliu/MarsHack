@@ -47,7 +47,7 @@ export default class RequestScreen extends Component {
     this.setState({
       orderObj: {
         "product_id": data.selectedProduct.pk,
-        "user_id": '5bba4139-1ee7-4ac2-8e77-72ed3f6b5a18_66293222-e8a4-478f-b69d-fc5598c67e7e',
+        "user_id": data.myCustomer.id,
         "start_date": this.dateToString(this.state.startDate),
         "end_date": this.dateToString(this.state.endDate),
         "percentage": this.state.share,
@@ -57,10 +57,17 @@ export default class RequestScreen extends Component {
     })
   }
 
-  placeOrder() {
-    data.createOrder(this.state.orderObj)
-    this.toggleModal()
-    this.props.navigation.navigate('Home')
+  async placeOrder() {
+    await data.createOrder(this.state.orderObj)
+    
+    setTimeout(() => {
+      data.getUnmatchedOrders()
+    }, 1000)
+    
+    setTimeout(() => {
+      this.toggleModal()
+      this.props.navigation.navigate('Home')
+    }, 1000)
   }
 
   dateToString(date) {
@@ -176,7 +183,7 @@ export default class RequestScreen extends Component {
             </Text>
 
             <DatePicker
-              defaultDate={new Date(2018, 8, 22)}
+              defaultDate={new Date(2018, 8, 23)}
               minimumDate={new Date(2018, 1, 1)}
               maximumDate={new Date(2019, 12, 31)}
               locale={'en'}
@@ -197,7 +204,7 @@ export default class RequestScreen extends Component {
             </Text>
 
             <DatePicker
-              defaultDate={new Date(2018, 8, 22)}
+              defaultDate={new Date(2018, 8, 23)}
               minimumDate={new Date(2018, 1, 1)}
               maximumDate={new Date(2019, 12, 31)}
               locale={'en'}
@@ -254,7 +261,7 @@ export default class RequestScreen extends Component {
               <Text style={{ fontSize: 18, color: '#0d47a1' }}> {this.state.orderObj.end_date}</Text>
             </Text>
             <Text style={{ fontSize: 18, marginBottom: 5 }}>Address:
-              <Text style={{ fontSize: 18, color: '#0d47a1' }}> 382 Yonge St, Toronto, ON M5B 1S8</Text>
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.myCustomer.address}</Text>
             </Text>
             <Text style={{ fontSize: 18, marginBottom: 5, marginTop: 5, fontWeight: 'bold' }}>Your Estimated Cost:
               <Text style={{ fontSize: 18, color: '#0d47a1' }}> ${ (data.selectedProduct.fields.price * this.state.orderObj.percentage * 0.01).toFixed(2) }</Text>

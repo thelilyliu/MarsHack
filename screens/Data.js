@@ -102,7 +102,6 @@ class Data {
     } catch (error) {
       console.error(error)
     }
-    console.log(res.data)
 
     return res.data
   }

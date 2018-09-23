@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 import { Container, Header, Content, Button, Text, Left, Icon, Right, Body } from 'native-base'
 import data from './Data'
 
@@ -7,6 +7,8 @@ const CUSTOMER_ID0 = '916a5844-f039-4899-9068-f5f379960d48_efc189f4-47b2-4197-a8
 const CUSTOMER_ID1 = '916a5844-f039-4899-9068-f5f379960d48_a9ea9582-f708-40f6-92b2-36e945de04c7' // Kaine Aadland
 const CUSTOMER_ID2 = '916a5844-f039-4899-9068-f5f379960d48_96bdaf4b-2075-4902-af56-4c4aa2367ee9' // Noelle Aaby
 const CUSTOMER_ID3 = '916a5844-f039-4899-9068-f5f379960d48_93a8cf46-185c-4f9b-8cec-5b66c776a1f1' // Lashanda Aaberg
+
+const logo = require('../logo.png')
 
 export default class LoginScreen extends Component {
   static navigationOptions = { header: null }
@@ -73,6 +75,11 @@ export default class LoginScreen extends Component {
         </Header>
 
         <Content style={{ padding: 15 }}>
+          <Image
+            source={logo}
+            style={{ height: (589 * 0.3), width: (390 * 0.3), flex: 1, alignSelf: 'center', margin: 20 }}
+          />
+
           <Button
             block
             style={{ marginBottom: 15, height: 50, backgroundColor: '#2196f3' }}
