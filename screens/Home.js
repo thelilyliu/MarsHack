@@ -33,23 +33,26 @@ export default class HomeScreen extends Component {
   }
 
   completeOrder() {
-    alert('order completed')
     this.toggleModal()
   }
 
   receiveOrder() {
-    alert('order received')
     this.toggleModal()
   }
 
   cancelOrder() {
-    alert('order canceled')
     this.toggleModal()
   }
 
   getProductByID(productID) {
-    return data.allProducts.filter(product => {
+    return data.allProducts.find(product => {
       return product.pk === productID
+    })
+  }
+
+  findMyUser(order) {
+    return order.users.find(user => {
+      return user.user.customer_id === data.myCustomerID
     })
   }
 
@@ -112,7 +115,7 @@ export default class HomeScreen extends Component {
                     <Body style={{ flex: 1 }}>
                       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 }}>
                         <Text style={{ fontSize: 18 }}>{order.product.name}</Text>
-                        <Text style={{ fontSize: 18 }}>${order.users[0].payment}</Text>
+                        <Text style={{ fontSize: 18 }}>${this.findMyUser(order).payment}</Text>
                       </View>
                       <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
                         <Text style={{ fontSize: 15, color: '#757575' }}>{order.product.store}</Text>
@@ -133,7 +136,7 @@ export default class HomeScreen extends Component {
 
           <List>
             {data.allUnmatchedOrders.map(order => {
-              let product = this.getProductByID(order.fields.product)[0]
+              let product = this.getProductByID(order.fields.product)
 
               return (
                 <ListItem
@@ -179,10 +182,10 @@ export default class HomeScreen extends Component {
               {this.state.selectedOrderMatched &&
                 <View>
                   <Text style={{ fontSize: 20, marginBottom: 10 }}>
-                    Role: {this.state.selectedOrder.users[0].is_deliverer ? 'Deliverer' : 'Receiver'}
+                    Role: {this.findMyUser(this.state.selectedOrder).is_deliverer ? 'Deliverer' : 'Receiver'}
                   </Text>
 
-                  {this.state.selectedOrder.users[0].is_deliverer ?
+                  {this.findMyUser(this.state.selectedOrder).is_deliverer ?
                     <Text style={{ fontSize: 16, marginTop: 0, marginBottom: 0, color: '#3f51b5' }}>
                       Delivery Date: {this.state.selectedOrder.date}
                     </Text>
@@ -191,7 +194,7 @@ export default class HomeScreen extends Component {
                   }
 
                   <List>
-                    {this.state.selectedOrder.users[0].is_deliverer && this.state.selectedOrder.users.map((user, index) => {
+                    {this.findMyUser(this.state.selectedOrder).is_deliverer && this.state.selectedOrder.users.map((user, index) => {
                       return (
                         <ListItem key={user.user.id}>
                           <CheckBox
@@ -210,7 +213,7 @@ export default class HomeScreen extends Component {
                       )
                     })}
 
-                    {!this.state.selectedOrder.users[0].is_deliverer && 
+                    {!this.findMyUser(this.state.selectedOrder).is_deliverer && 
                       <List>
                         <ListItem icon style={{ marginTop: 5 }}>
                           <Left>
@@ -222,7 +225,7 @@ export default class HomeScreen extends Component {
                             <Text>Amount Paid</Text>
                           </Body>
                           <Right>
-                            <Text style={{ color: 'black' }}>${this.state.selectedOrder.users[0].payment}</Text>
+                            <Text style={{ color: 'black' }}>${this.findMyUser(this.state.selectedOrder).payment}</Text>
                           </Right>
                         </ListItem>
 
@@ -236,7 +239,7 @@ export default class HomeScreen extends Component {
                             <Text>Percentage Share</Text>
                           </Body>
                           <Right>
-                            <Text style={{ color: 'black' }}>{this.state.selectedOrder.users[0].percentage}%</Text>
+                            <Text style={{ color: 'black' }}>{this.findMyUser(this.state.selectedOrder).percentage}%</Text>
                           </Right>
                         </ListItem>
 
@@ -267,7 +270,7 @@ export default class HomeScreen extends Component {
                       <Text>Close</Text>
                     </Button>
 
-                    {this.state.selectedOrder.users[0].is_deliverer ?
+                    {this.findMyUser(this.state.selectedOrder).is_deliverer ?
                       <Button
                         iconLeft
                         success
@@ -310,7 +313,7 @@ export default class HomeScreen extends Component {
                       </Body>
                       <Right>
                         <Text style={{ color: 'black' }}>
-                          ${(this.getProductByID(this.state.selectedOrder.fields.product)[0].fields.price * this.state.selectedOrder.fields.percentage * 0.01).toFixed(2)}
+                          ${(this.getProductByID(this.state.selectedOrder.fields.product).fields.price * this.state.selectedOrder.fields.percentage * 0.01).toFixed(2)}
                         </Text>
                       </Right>
                     </ListItem>

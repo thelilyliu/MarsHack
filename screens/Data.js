@@ -34,8 +34,6 @@ class Data {
     }
     console.log(res.data)
 
-    // res.data[0].users.reverse()
-
     this.allMatchedOrders = res.data
   }
 
