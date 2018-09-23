@@ -60,7 +60,7 @@ export default class RequestScreen extends Component {
   placeOrder() {
     data.createOrder(this.state.orderObj)
     this.toggleModal()
-    this.props.navigation.push('Home')
+    this.props.navigation.navigate('Home')
   }
 
   dateToString(date) {
@@ -108,7 +108,7 @@ export default class RequestScreen extends Component {
                 <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
                 <Body style={{ flex: 1 }}>
                   <Text style={{ fontSize: 18, marginBottom: 3 }}>{data.selectedProduct.fields.name}</Text>
-                  <Text note style={{ fontSize: 15 }}>{data.selectedProduct.fields.store}</Text>
+                  <Text style={{ fontSize: 15, color: '#757575' }}>{data.selectedProduct.fields.store}</Text>
                 </Body>
               </Left>
               <Text style={{ fontSize: 18 }}>${data.selectedProduct.fields.price}</Text>
@@ -157,7 +157,7 @@ export default class RequestScreen extends Component {
             </Button>
           </View>
 
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 25, marginBottom: 15 }}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 20, marginBottom: 10 }}>
             <Text style={{ fontSize: 18 }}>Volunteer as a Deliverer:
               <Text style={{ fontSize: 18, color: '#0d47a1' }}> {this.state.canDeliver ? 'Yes' : 'No'}</Text>
             </Text>
@@ -210,6 +210,10 @@ export default class RequestScreen extends Component {
             />
           </View>
 
+          <Text style={{ fontSize: 18, marginTop: 10 }}>Address:
+            <Text style={{ fontSize: 18, color: '#0d47a1' }}> 382 Yonge St, Toronto, ON M5B 1S8</Text>
+          </Text>
+
           <Button
             iconLeft
             block
@@ -219,32 +223,39 @@ export default class RequestScreen extends Component {
             <Icon name='paper-plane' />
             <Text>Confirm Order</Text>
           </Button>
+
+          <View style={{ height: 20 }} />
         </Content>
       
         <Modal isVisible={this.state.showModal}>
           <View style={{ backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
-            <Text style={{ fontSize: 20, marginBottom: 20 }}>Confirm Your Order Details</Text>
+            <View style={{ borderBottomColor: '#616161', borderBottomWidth: 0.5, marginBottom: 10 }}>
+              <Text style={{ fontSize: 20, marginBottom: 10 }}>Confirm Your Order Details</Text>
+            </View>
             
-            <Text style={{ marginBottom: 5 }}>Product:
-              <Text style={{ color: '#0d47a1' }}> {data.selectedProduct.fields.name}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>Product:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.selectedProduct.fields.name}</Text>
             </Text>
-            <Text style={{ marginBottom: 5 }}>Store:
-              <Text style={{ color: '#0d47a1' }}> {data.selectedProduct.fields.store}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>Store:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.selectedProduct.fields.store}</Text>
             </Text>
-            <Text style={{ marginBottom: 5 }}>Share:
-              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.percentage}%</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>Share:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {this.state.orderObj.percentage}%</Text>
             </Text>
-            <Text style={{ marginBottom: 5 }}>Volunteer as a Deliverer:
-              <Text style={{ color: '#0d47a1' }}> { this.state.orderObj.can_deliver ? 'Yes' : 'No' }</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>Volunteer as a Deliverer:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> { this.state.orderObj.can_deliver ? 'Yes' : 'No' }</Text>
             </Text>
-            <Text style={{ marginBottom: 5 }}>From Date:
-              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.start_date}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>From Date:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {this.state.orderObj.start_date}</Text>
             </Text>
-            <Text style={{ marginBottom: 5 }}>To Date:
-              <Text style={{ color: '#0d47a1' }}> {this.state.orderObj.end_date}</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>To Date:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> {this.state.orderObj.end_date}</Text>
             </Text>
-            <Text style={{ marginBottom: 5, fontWeight: 'bold' }}>Your Estimated Price:
-              <Text style={{ color: '#0d47a1' }}> ${ (data.selectedProduct.fields.price * this.state.orderObj.percentage * 0.01).toFixed(2) }</Text>
+            <Text style={{ fontSize: 18, marginBottom: 5 }}>Address:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> 382 Yonge St, Toronto, ON M5B 1S8</Text>
+            </Text>
+            <Text style={{ fontSize: 18, marginBottom: 5, marginTop: 5, fontWeight: 'bold' }}>Your Estimated Price:
+              <Text style={{ fontSize: 18, color: '#0d47a1' }}> ${ (data.selectedProduct.fields.price * this.state.orderObj.percentage * 0.01).toFixed(2) }</Text>
             </Text>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, Left, Right, Form, Item, Label, Input, Thumbnail, Fab, Picker } from 'native-base'
+import { StyleSheet, Image, View } from 'react-native'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, Left, Right, Form, Item, Label, Input, Thumbnail, Picker } from 'native-base'
 import data from './Data'
 
 export default class FindItemScreen extends Component {
@@ -100,23 +100,23 @@ export default class FindItemScreen extends Component {
           {this.state.searched && this.state.filteredProducts.map(product => {
             return (
               <Card key={product.pk} style={{ marginBottom: 15 }}>
-                <CardItem>
+                <CardItem bordered>
                   <Left>
                     <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
                     <Body style={{ flex: 1 }}>
                       <Text style={{ fontSize: 18, marginBottom: 3 }}>{product.fields.name}</Text>
-                      <Text note style={{ fontSize: 15 }}>{product.fields.store}</Text>
+                      <Text style={{ fontSize: 15, color: '#757575' }}>{product.fields.store}</Text>
                     </Body>
                   </Left>
                   <Text style={{ fontSize: 18 }}>${product.fields.price}</Text>
                 </CardItem>
-                <CardItem cardBody>
+                <CardItem cardBody bordered>
                   <Image
                     source={{ uri: product.fields.image_url }}
                     style={{ height: 200, width: null, flex: 1 }}
                   />
                 </CardItem>
-                <CardItem>
+                <CardItem bordered>
                   <Body style={{ padding: 5 }}>
                     <Text>{product.fields.description}</Text>
                     <Button
@@ -133,28 +133,9 @@ export default class FindItemScreen extends Component {
               </Card>
             )
           })}
-        </Content>
 
-        <View>
-          <Fab
-            active={this.state.active}
-            direction="up"
-            containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF' }}
-            position="bottomRight"
-            onPress={() => this.setState({ active: !this.state.active })}>
-            <Icon name="menu" />
-            <Button style={{ backgroundColor: '#34A34F' }}>
-              <Icon name="home" onPress={() => this.props.navigation.push('Home')}/>
-            </Button>
-            <Button style={{ backgroundColor: '#3B5998' }}>
-              <Icon name="pulse" />
-            </Button>
-            <Button disabled style={{ backgroundColor: '#DD5144' }}>
-              <Icon name="add" />
-            </Button>
-          </Fab>
-        </View>
+          <View style={{ height: 20 }} />
+        </Content>
       </Container>
     )
   }

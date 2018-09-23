@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
-import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, ListItem, Left, Right, Switch, Fab, View } from 'native-base'
+import { Container, Header, Content, Button, Text, Icon, Card, CardItem, Body, List, ListItem, Left, Right, Switch, View, Thumbnail, CheckBox } from 'native-base'
+import Modal from 'react-native-modal'
 import data from './Data'
 
 export default class HomeScreen extends Component {
@@ -10,10 +11,35 @@ export default class HomeScreen extends Component {
     super(props)
 
     this.state = {
-      active : false
+      selectedOrder: {},
+      showModal: false
     }
 
-    data.getAllProducts()
+    this.showOrderDetails = this.showOrderDetails.bind(this)
+    this.completeOrder = this.completeOrder.bind(this)
+  }
+
+  showOrderDetails(order) {
+    this.setState({
+      selectedOrder: order,
+      showModal: true
+    })
+  }
+
+  completeOrder() {
+    
+  }
+
+  getProductByID(productID) {
+    return data.allProducts.filter(product => {
+      return product.pk === productID
+    })
+  }
+
+  toggleModal() {
+    this.setState(prevState => {
+      return { showModal: !prevState.showModal }
+    })
   }
 
   render() {
@@ -44,134 +70,138 @@ export default class HomeScreen extends Component {
             onPress={() => this.props.navigation.push('FindItem')}
           >
             <Icon name='add' style={{ fontSize: 32, marginTop: -1 }} />
-            <Text style={{ fontSize: 18 }}>New Request</Text>
+            <Text style={{ fontSize: 20 }}>New Request</Text>
           </Button>
 
-          <Card>
-            <CardItem header bordered>
-              <Left>
-                <Text style={{ fontSize: 18, marginLeft: 0, color: '#0d47a1' }}>Eggs</Text>
-              </Left>
-              <Right>
-                <Text style={{ fontSize: 18, marginLeft: 0, color: '#0d47a1' }}>$4.20</Text>
-              </Right>
-            </CardItem>
+          {data.allOrders.map(order => {
+            let productID = order.fields.product
+            let product = this.getProductByID(productID)[0]
 
-            <ListItem icon style={{ marginTop: 5 }}>
-              <Left>
-                <Button style={{ backgroundColor: '#3f51b5' }}>
-                  <Icon active name='cart' />
-                </Button>
-              </Left>
-              <Body>
-                <Text>Store</Text>
-              </Body>
-              <Right>
-                <Text style={{ color: 'black' }}>Costco Wholesale</Text>
-              </Right>
-            </ListItem>
+            return (
+              <Card key={order.pk} style={{ marginBottom: 15 }}>
+                <CardItem bordered>
+                  <Left>
+                    <Thumbnail source={{ uri: 'https://icon2.kisspng.com/20180526/svu/kisspng-costco-gift-card-money-discounts-and-allowances-5b09a473723b03.1047530015273585794679.jpg' }} />
+                    <Body style={{ flex: 1 }}>
+                      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 6 }}>
+                        <Text style={{ fontSize: 18 }}>{product.fields.name}</Text>
+                        <Text style={{ fontSize: 18 }}>${(product.fields.price * order.fields.percentage * 0.01).toFixed(2)}</Text>
+                      </View>
+                      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginTop: 3 }}>
+                        <Text style={{ fontSize: 15, color: '#757575' }}>{product.fields.store}</Text>
+                        <Button
+                          transparent
+                          style={{ paddingTop: 0, paddingBottom: 0, height: 25 }}
+                          onPress={() => this.showOrderDetails(order)}
+                        >
+                          <Icon name='alert' style={{ transform: [{ rotate: '180deg'}], marginLeft: 0, marginRight: 0 }} />
+                        </Button>
+                      </View>
+                    </Body>
+                  </Left>
+                </CardItem>
 
-            <ListItem icon>
-              <Left>
-                <Button style={{ backgroundColor: '#2196f3' }}>
-                  <Icon active name='pie' />
-                </Button>
-              </Left>
-              <Body>
-                <Text>Share</Text>
-              </Body>
-              <Right>
-                <Text style={{ color: 'black' }}>25%</Text>
-              </Right>
-            </ListItem>
+                <ListItem icon style={{ marginTop: 5 }}>
+                  <Left>
+                    <Button style={{ backgroundColor: '#2196f3' }}>
+                      <Icon active name='pie' />
+                    </Button>
+                  </Left>
+                  <Body>
+                    <Text>Percentage Share</Text>
+                  </Body>
+                  <Right>
+                    <Text style={{ color: 'black' }}>{order.fields.percentage}%</Text>
+                  </Right>
+                </ListItem>
 
-            <ListItem icon>
-              <Left>
-                <Button style={{ backgroundColor: '#03a9f4' }}>
-                  <Icon active name='hand' />
-                </Button>
-              </Left>
-              <Body>
-                <Text>Delivery Volunteer</Text>
-              </Body>
-              <Right>
-                <Switch value={true} disabled />
-              </Right>
-            </ListItem>
+                <ListItem icon>
+                  <Left>
+                    <Button style={{ backgroundColor: '#03a9f4' }}>
+                      <Icon active name='hand' />
+                    </Button>
+                  </Left>
+                  <Body>
+                    <Text>Delivery Volunteer</Text>
+                  </Body>
+                  <Right>
+                    <Switch value={order.fields.can_deliver} disabled />
+                  </Right>
+                </ListItem>
 
-            <ListItem icon>
-              <Left>
-                <Button style={{ backgroundColor: '#00bcd4' }}>
-                  <Icon active name='calendar' />
-                </Button>
-              </Left>
-              <Body>
-                <Text>Delivery Date</Text>
-              </Body>
-              <Right>
-                <Text style={{ color: 'black' }}>Fri. Sep. 21</Text>
-              </Right>
-            </ListItem>
-
-            <ListItem icon style={{ marginBottom: 5 }}>
-              <Left>
-                <Button style={{ backgroundColor: '#009688' }}>
-                  <Icon active name='construct' />
-                </Button>
-              </Left>
-              <Body style={{ borderColor: 'transparent' }}>
-                <Text>More Actions</Text>
-              </Body>
-              <Right style={{ borderColor: 'transparent' }}>
-                <Button iconLeft transparent>
-                  <Icon name='arrow-forward' style={{ fontSize: 30 }} />
-                </Button>
-              </Right>
-            </ListItem>
-          </Card>
+                <ListItem icon style={{ marginBottom: 5 }}>
+                  <Left>
+                    <Button style={{ backgroundColor: '#00bcd4' }}>
+                      <Icon active name='calendar' />
+                    </Button>
+                  </Left>
+                  <Body style={{ borderColor: 'transparent' }}>
+                    <Text>Delivery Date</Text>
+                  </Body>
+                  <Right style={{ borderColor: 'transparent' }}>
+                    <Text style={{ color: 'black' }}>Fri. Sep. 21</Text>
+                  </Right>
+                </ListItem>
+              </Card>
+            )
+          })}
+          
+          <View style={{ height: 20 }} />
         </Content>
 
-        <View>
-          <Fab
-            active={this.state.active}
-            direction="up"
-            containerStyle={{ }}
-            style={{ backgroundColor: '#5067FF' }}
-            position="bottomRight"
-            onPress={() => this.setState({ active: !this.state.active })}>
-            <Icon name="menu" />
-            <Button style={{ backgroundColor: '#34A34F' }} >
-              <Icon name="home"/>
-            </Button>
-            <Button style={{ backgroundColor: '#3B5998' }}>
-              <Icon name="pulse"/>
-            </Button>
-            <Button style={{ backgroundColor: '#DD5144' }} 
-                    onPress={() => this.props.navigation.push('ItemSearch')}>
-              <Icon name="add"/>
-            </Button>
-          </Fab>
-        </View>
+        <Modal isVisible={this.state.showModal}>
+          <View style={{ backgroundColor: 'white', borderRadius: 10, padding: 20 }}>
+            <Text style={{ fontSize: 20, marginBottom: 10 }}>Order Details: Deliverer</Text>
+
+            <List>
+              <ListItem>
+                <CheckBox checked={false} />
+                <Body style={{ marginLeft: 5 }}>
+                  <Text style={{ fontSize: 18, marginBottom: 5 }}>Lily Liu – 30%</Text>
+                  <Text style={{ fontSize: 16, color: '#424242' }}>317 Dundas St W, Toronto, ON M5T 1G4</Text>
+                </Body>
+              </ListItem>
+
+              <ListItem>
+                <CheckBox checked={false} />
+                <Body style={{ marginLeft: 5 }}>
+                  <Text style={{ fontSize: 18, marginBottom: 5 }}>Ben Xiao – 20%</Text>
+                  <Text style={{ fontSize: 16, color: '#424242' }}>60 Queen St W, Toronto, ON M5H 2M3</Text>
+                </Body>
+              </ListItem>
+
+              <ListItem>
+                <CheckBox checked={true} color={'#9e9e9e'} />
+                <Body style={{ marginLeft: 5 }}>
+                  <Text style={{ fontSize: 18, marginBottom: 5 }}>Kevin Trieu – 50%</Text>
+                  <Text style={{ fontSize: 16, color: '#424242' }}>1 Richmond St W, Toronto, ON M5H 3W4</Text>
+                </Body>
+              </ListItem>
+            </List>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 20 }}>
+              <Button
+                iconLeft
+                light
+                onPress={() => this.toggleModal()}
+              >
+                <Icon name='close' />
+                <Text>Close</Text>
+              </Button>
+              <Button
+                iconLeft
+                success
+                onPress={() => this.completeOrder()}
+              >
+                <Icon name='done-all' />
+                <Text>Complete</Text>
+              </Button>
+            </View>
+          </View>
+        </Modal>
       </Container>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-})
+const styles = StyleSheet.create({})

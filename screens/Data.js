@@ -1,11 +1,14 @@
 import axios from 'axios'
 
+const CUSTOMER_ID = '5bba4139-1ee7-4ac2-8e77-72ed3f6b5a18_66293222-e8a4-478f-b69d-fc5598c67e7e'
+
 class Data {
   allProducts = []
+  allOrders = []
   selectedProduct = {}
 
   async getAllProducts() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_products'
+    const url = 'http://mars-hack.herokuapp.com/api/get_products/'
 
     let res
     try {
@@ -13,10 +16,23 @@ class Data {
     } catch (error) {
       console.error(error)
     }
-
     console.log(res.data)
 
     this.allProducts = res.data
+  }
+
+  async getAllOrders() {
+    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders/' + CUSTOMER_ID + '/'
+
+    let res
+    try {
+      res = await axios.get(url)
+    } catch (error) {
+      console.error(error)
+    }
+    console.log(res.data)
+
+    this.allOrders = res.data
   }
 
   getFilteredProducts(item, store) {
@@ -54,7 +70,6 @@ class Data {
     } catch (error) {
       console.error(error)
     }
-
     console.log(res.data)
 
     return res.data

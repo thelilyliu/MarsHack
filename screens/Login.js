@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet } from 'react-native'
 import { Container, Header, Content, Button, Text, Left, Icon, Right, Body } from 'native-base'
+import data from './Data'
 
 export default class LoginScreen extends Component {
   static navigationOptions = { header: null }
@@ -9,6 +10,9 @@ export default class LoginScreen extends Component {
     super(props)
 
     this.state = {}
+
+    data.getAllProducts()
+    data.getAllOrders()
   }
 
   render() {
@@ -33,31 +37,24 @@ export default class LoginScreen extends Component {
         <Content style={{ padding: 15 }}>
           <Button
             block
-            style={{ marginBottom: 15 }}
+            style={{ marginBottom: 15, height: 50, backgroundColor: '#2196f3' }}
             onPress={() => this.props.navigation.push('Home')}
           >
-            <Text>Lily Liu</Text>
+            <Text style={{ fontSize: 20 }}>Lily Liu</Text>
           </Button>
           <Button
             block
-            style={{ marginBottom: 15 }}
+            style={{ marginBottom: 15, height: 50, backgroundColor: '#03a9f4' }}
             onPress={() => this.props.navigation.push('Home')}
           >
-            <Text>Ben Xiao</Text>
+            <Text style={{ fontSize: 20 }}>Ben Xiao</Text>
           </Button>
           <Button
             block
-            style={{ marginBottom: 15 }}
+            style={{ marginBottom: 15, height: 50, backgroundColor: '#00bcd4' }}
             onPress={() => this.props.navigation.push('Home')}
           >
-            <Text>Kevin Trieu</Text>
-          </Button>
-          <Button
-            block
-            style={{ marginBottom: 15 }}
-            onPress={() => this.props.navigation.push('Home')}
-          >
-            <Text>Haibo Wang</Text>
+            <Text style={{ fontSize: 20 }}>Kevin Trieu</Text>
           </Button>
         </Content>
       </Container>
