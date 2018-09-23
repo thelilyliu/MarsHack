@@ -1,14 +1,17 @@
 import axios from 'axios'
 
 class Data {
-  myCustomerID = ''
-  myCustomerFirstName = ''
-  myCustomerAddress = ''
 
   allProducts = []
   allMatchedOrders = []
   allUnmatchedOrders = []
 
+  myCustomer = {
+    id: '',
+    firstName: '',
+    address: ''
+  }
+  
   selectedProduct = {}
 
   async getAllProducts() {
@@ -26,7 +29,7 @@ class Data {
   }
 
   async getMatchedOrders() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders_merged/' + this.myCustomerID + '/'
+    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders_merged/' + this.myCustomer.id + '/'
 
     let res
     try {
@@ -40,7 +43,7 @@ class Data {
   }
 
   async getUnmatchedOrders() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders/' + this.myCustomerID + '/'
+    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders/' + this.myCustomer.id + '/'
 
     let res
     try {

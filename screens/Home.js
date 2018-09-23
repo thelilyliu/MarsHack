@@ -63,7 +63,7 @@ export default class HomeScreen extends Component {
 
   findMyUser(order) {
     return order.users.find(user => {
-      return user.user.customer_id === data.myCustomerID
+      return user.user.customer_id === data.myCustomer.id
     })
   }
 
@@ -99,7 +99,7 @@ export default class HomeScreen extends Component {
             <Text style={{ fontSize: 18 }}>Home</Text>
           </Body>
           <Right>
-            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomerFirstName}</Text>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomer.firstName}</Text>
           </Right>
         </Header>
 
@@ -211,9 +211,9 @@ export default class HomeScreen extends Component {
                       return (
                         <ListItem key={user.user.id}>
                           <CheckBox
-                            checked={user.is_complete || user.user.customer_id === data.myCustomerID}
+                            checked={user.is_complete || user.user.customer_id === data.myCustomer.id}
                             onPress={() => this.toggleCheck(index)}
-                            color={user.user.customer_id === data.myCustomerID ? '#9e9e9e' : '' }
+                            color={user.user.customer_id === data.myCustomer.id ? '#9e9e9e' : '' }
                           />
                           <Body style={{ marginLeft: 5 }}>
                             <Text style={{ fontSize: 18, marginBottom: 5 }}>

@@ -99,7 +99,7 @@ export default class RequestScreen extends Component {
             <Text style={{ fontSize: 18 }}>Request</Text>
           </Body>
           <Right>
-            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomerFirstName}</Text>
+            <Text style={{ fontSize: 18, marginRight: 5 }}>{data.myCustomer.firstName}</Text>
           </Right>
         </Header>
 
@@ -213,7 +213,7 @@ export default class RequestScreen extends Component {
           </View>
 
           <Text style={{ fontSize: 18, marginTop: 10 }}>Address:
-            <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.myCustomerAddress}</Text>
+            <Text style={{ fontSize: 18, color: '#0d47a1' }}> {data.myCustomer.address}</Text>
           </Text>
 
           <Button
