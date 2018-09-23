@@ -1,10 +1,12 @@
 import axios from 'axios'
 
-const CUSTOMER_ID = '5bba4139-1ee7-4ac2-8e77-72ed3f6b5a18_66293222-e8a4-478f-b69d-fc5598c67e7e'
-
 class Data {
+  myCustomerID = ''
+
   allProducts = []
-  allOrders = []
+  allMatchedOrders = []
+  allUnmatchedOrders = []
+
   selectedProduct = {}
 
   async getAllProducts() {
@@ -21,8 +23,8 @@ class Data {
     this.allProducts = res.data
   }
 
-  async getAllOrders() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders/' + CUSTOMER_ID + '/'
+  async getMatchedOrders() {
+    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders_merged/' + this.myCustomerID + '/'
 
     let res
     try {
@@ -32,7 +34,23 @@ class Data {
     }
     console.log(res.data)
 
-    this.allOrders = res.data
+    // res.data[0].users.reverse()
+
+    this.allMatchedOrders = res.data
+  }
+
+  async getUnmatchedOrders() {
+    const url = 'http://mars-hack.herokuapp.com/api/get_cust_orders/' + this.myCustomerID + '/'
+
+    let res
+    try {
+      res = await axios.get(url)
+    } catch (error) {
+      console.error(error)
+    }
+    console.log(res.data)
+
+    this.allUnmatchedOrders = res.data
   }
 
   getFilteredProducts(item, store) {

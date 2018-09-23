@@ -254,7 +254,7 @@ export default class RequestScreen extends Component {
             <Text style={{ fontSize: 18, marginBottom: 5 }}>Address:
               <Text style={{ fontSize: 18, color: '#0d47a1' }}> 382 Yonge St, Toronto, ON M5B 1S8</Text>
             </Text>
-            <Text style={{ fontSize: 18, marginBottom: 5, marginTop: 5, fontWeight: 'bold' }}>Your Estimated Price:
+            <Text style={{ fontSize: 18, marginBottom: 5, marginTop: 5, fontWeight: 'bold' }}>Your Estimated Cost:
               <Text style={{ fontSize: 18, color: '#0d47a1' }}> ${ (data.selectedProduct.fields.price * this.state.orderObj.percentage * 0.01).toFixed(2) }</Text>
             </Text>
 

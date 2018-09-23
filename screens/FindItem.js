@@ -10,7 +10,7 @@ export default class FindItemScreen extends Component {
     super(props)
 
     this.state = {
-      searched: false,
+      searchedItem: false,
       item: '',
       store: 'Costco Wholesale',
       filteredProducts: []
@@ -32,7 +32,7 @@ export default class FindItemScreen extends Component {
 
   filterProducts() {
     this.setState({
-      searched: true,
+      searchedItem: true,
       filteredProducts: data.getFilteredProducts(this.state.item, this.state.store)
     })
   }
@@ -97,7 +97,7 @@ export default class FindItemScreen extends Component {
             <Text>Search</Text>
           </Button>
 
-          {this.state.searched && this.state.filteredProducts.map(product => {
+          {this.state.searchedItem && this.state.filteredProducts.map(product => {
             return (
               <Card key={product.pk} style={{ marginBottom: 15 }}>
                 <CardItem bordered>
