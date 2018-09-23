@@ -43,11 +43,16 @@ export default class HomeScreen extends Component {
     })
 
     if (counter === total) {
-      this.toggleModal()
+      this.receiveOrder()
     }
   }
 
   receiveOrder() {
+    let customerID = data.myCustomer.id
+    let orderID = this.state.selectedOrder.id
+
+    data.markOrderComplete(customerID, orderID)
+
     this.toggleModal()
   }
 

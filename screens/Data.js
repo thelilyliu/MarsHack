@@ -1,31 +1,16 @@
 import axios from 'axios'
 
 class Data {
-
-  allProducts = []
   allMatchedOrders = []
   allUnmatchedOrders = []
+  
+  allProducts = []
+  selectedProduct = {}
 
   myCustomer = {
     id: '',
     firstName: '',
     address: ''
-  }
-  
-  selectedProduct = {}
-
-  async getAllProducts() {
-    const url = 'http://mars-hack.herokuapp.com/api/get_products/'
-
-    let res
-    try {
-      res = await axios.get(url)
-    } catch (error) {
-      console.error(error)
-    }
-    console.log(res.data)
-
-    this.allProducts = res.data
   }
 
   async getMatchedOrders() {
@@ -54,6 +39,32 @@ class Data {
     console.log(res.data)
 
     this.allUnmatchedOrders = res.data
+  }
+
+  async markOrderComplete(customerID, orderID) {
+    const url = 'http://mars-hack.herokuapp.com/api/complete_order/' + customerID + '/' + orderID + '/'
+
+    let res
+    try {
+      res = await axios.post(url)
+    } catch (error) {
+      console.error(error)
+    }
+    console.log(res.data)
+  }
+
+  async getAllProducts() {
+    const url = 'http://mars-hack.herokuapp.com/api/get_products/'
+
+    let res
+    try {
+      res = await axios.get(url)
+    } catch (error) {
+      console.error(error)
+    }
+    console.log(res.data)
+
+    this.allProducts = res.data
   }
 
   getFilteredProducts(item, store) {
